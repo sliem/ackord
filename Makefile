@@ -344,7 +344,7 @@ REMOVE = rm -f
 REMOVEDIR = rm -rf
 COPY = cp
 WINSHELL = cmd
-
+TEENSYLOADER = teensyloader
 
 # Define Messages
 # English
@@ -445,6 +445,9 @@ gccversion :
 program: $(TARGET).hex $(TARGET).eep
 	$(AVRDUDE) $(AVRDUDE_FLAGS) $(AVRDUDE_WRITE_FLASH) $(AVRDUDE_WRITE_EEPROM)
 
+# Program the teensy using teensyloader cli command
+upload:
+	$(TEENSYLOADER) -w -mmcu=$(MCU) $(TARGET).hex
 
 # Generate avr-gdb config/init file which does the following:
 #     define the reset signal, load the target file, connect to target, and set 
