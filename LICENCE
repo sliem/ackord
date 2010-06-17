@@ -1,7 +1,6 @@
 
-I want to release my code into public domain. However in Sweden 
-I do not have that ability so I licence my code under the 
-following terms.
+I want to release my code into public domain. However in Sweden I do
+not have that ability so I licence my code under the following terms.
 
 Copyright (c) 2010 Sebastian A. Liem <sebastian at liem dot se>
 
@@ -12,6 +11,8 @@ purpose with or without fee is hereby granted.
 Code not written by me
 ----------------------
 
-I found the Makefile on http://www.pjrc.com/teensy/. It placed 
-under public domain, see the actual file for more info. 
+I found the Makefile on http://www.pjrc.com/teensy/. It placed under
+public domain, see the actual file for more info.
 
+usb_keyboard.* is written by PJRC.COM, LLC. It is licenced under
+BSD. See the actual files for more info.
