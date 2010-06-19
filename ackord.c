@@ -2,9 +2,8 @@
 #include <avr/pgmspace.h>
 #include <util/delay.h>
 
+#include "ackord.h"
 #include "usb_keyboard.h"
-
-#define CPU_PRESCALE(n) (CLKPR = 0x80, CLKPR = (n))
 
 void
 main(void) {
