@@ -1,4 +1,4 @@
-const keymap[128] PROGMEM = {
+const uint8_t keymap[128] PROGMEM = {
   0, /* 000 0000, no button pressed, 0 means send nothing */
   0, /* 000 0001 */
   0, /* 000 0010 */
@@ -123,4 +123,4 @@ const keymap[128] PROGMEM = {
   0,
   0,
   0
-}
+};

@@ -2,11 +2,11 @@
 #include <avr/pgmspace.h>
 #include <util/delay.h>
 
+#include "usb_keyboard.h"
 #include "ackord.h"
 #include "keymap.h"
-#include "usb_keyboard.h"
 
-void
+int
 main(void) {
   CPU_PRESCALE(0); /* 16 MHz */
 
