@@ -3,6 +3,7 @@
 #include <util/delay.h>
 
 #include "ackord.h"
+#include "keymap.h"
 #include "usb_keyboard.h"
 
 void
