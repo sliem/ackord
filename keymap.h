@@ -1,8 +1,8 @@
 const prog_uint8_t keymap[128] PROGMEM = {
   0, /* 000 0000, no button pressed, 0 means send nothing */
-  0, /* 000 0001 */
-  0, /* 000 0010 */
-  0, /* 000 0011 */
+  KEY_A, /* 000 0001 */
+  KEY_B, /* 000 0010 */
+  KEY_C, /* 000 0011 */
   0, /* 000 0100 */
   0, /* 000 0101 */
   0, /* 000 0110 */
