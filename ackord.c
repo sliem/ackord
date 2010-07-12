@@ -9,7 +9,7 @@
 
 int
 main(void) {
-  uint8_t t;
+  static uint8_t oldkeystate, newkeystate;
 
   CPU_PRESCALE(0); /* 16 MHz */
 
@@ -23,8 +23,6 @@ main(void) {
   while (!usb_configured()) /* wait */ ;
   _delay_ms(1000);
 
-  usb_keyboard_press(KEY_A, 0);
-  
   /* timer0 to overflow every 256*1024 clock cycles */
   TCCR0A = 0x00;
   TCCR0B = 0x05;
@@ -33,17 +31,13 @@ main(void) {
  
   
   while(1) {
-    t = readpins_debounced();
+    newkeystate = readpins_debounced();
 
-    if (t != 0) {
-      usb_keyboard_press(pgm_read_byte_near(keymap + t), 0);
+    if (newkeystate != oldkeystate) {
+      usb_keyboard_press(pgm_read_byte_near(keymap + newkeystate), 0);
     }
+    oldkeystate = newkeystate;
   }
-}
-
-uint8_t
-readpins(void) {
-  return PINB;
 }
 
 uint8_t
@@ -59,20 +53,16 @@ readpins_debounced(void) {
 }
 
 ISR(TIMER0_OVF_vect) {
-  static volatile uint8_t oldstate, newstate, count;
+  static volatile uint8_t oldeststate, oldstate, newstate;
 
-  newstate = readpins();
+  newstate = PINB;
 
-  if (newstate == oldstate) { 
-    count++;
-  } else {
-    count = 0;
-  }
-
-  oldstate = newstate;
-
-  if (count > 10) {
+  if (newstate == oldstate &&
+      newstate == oldeststate &&
+      oldstate == oldeststate) { 
     btnstate = newstate;
-    count = 0;
   }
+
+  oldeststate = oldstate;
+  oldstate = newstate;
 }
