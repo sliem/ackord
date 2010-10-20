@@ -1,13 +1,15 @@
+#include "ackord.h"
+
 const prog_uint8_t keymap[128] PROGMEM = {
-  0, /* 000 0000, no button pressed, 0 means send nothing */
-  KEY_A, /* 000 0001 */
-  KEY_B, /* 000 0010 */
-  KEY_C, /* 000 0011 */
-  0, /* 000 0100 */
-  0, /* 000 0101 */
-  0, /* 000 0110 */
-  0, /* 000 0111 */
-  0, /* 000 1000 */
+  0,        /* 000 0000, no button pressed, 0 means send nothing */
+  KEY_A,    /* 000 0001 */
+  KEY_B,    /* 000 0010 */
+  KEY_C,    /* 000 0011 */
+  KEY_D,    /* 000 0100 */
+  KEY_E,    /* 000 0101 */
+  KEY_F,    /* 000 0110 */
+  KEY_G,    /* 000 0111 */
+  KEY_CTRL + MODIFIER_OFFSET, /* 000 1000 */
   0, /* 000 1001 */
   0, /* 000 1010 */
   0, /* 000 1011 */

@@ -9,13 +9,48 @@
 
 int
 main(void) {
-  static uint8_t oldkeystate, newkeystate;
+  uint8_t oldkeystate, newkeystate, key;
 
+  oldkeystate = newkeystate = key = 0;
+
+  init();
+  
+  while(1) {
+    newkeystate = readpins_debounced();
+
+    if (newkeystate != oldkeystate) {
+      key = pgm_read_byte_near(keymap + newkeystate);
+
+      switch (key) {
+
+      case KEY_CTRL  + MODIFIER_OFFSET: /* fallthrough */;
+      case KEY_ALT   + MODIFIER_OFFSET: /* fallthrough */;
+      case KEY_SHIFT + MODIFIER_OFFSET: /* fallthrough */;
+      case KEY_GUI   + MODIFIER_OFFSET:
+        keyboard_modifier_keys |= (key - MODIFIER_OFFSET);
+	keyboard_keys[0] = KEY_K;
+	usb_keyboard_send();
+	keyboard_keys[0] = 0;
+        break;
+
+      default: 
+	keyboard_keys[0] = key;
+	usb_keyboard_send();
+	keyboard_modifier_keys = keyboard_keys[0] = 0;
+	break; 
+      }
+     }
+    oldkeystate = newkeystate;
+  }
+}
+
+void 
+init(void) {
   CPU_PRESCALE(0); /* 16 MHz */
 
   /* configure the pins */
   DDRB  = 0x00;
-  PORTB = 0x00;
+  PORTB = 0xFF;
 
   usb_init();
 
@@ -28,16 +63,6 @@ main(void) {
   TCCR0B = 0x05;
   TIMSK0 = (1<<TOIE0);
   sei();
- 
-  
-  while(1) {
-    newkeystate = readpins_debounced();
-
-    if (newkeystate != oldkeystate) {
-      usb_keyboard_press(pgm_read_byte_near(keymap + newkeystate), 0);
-    }
-    oldkeystate = newkeystate;
-  }
 }
 
 uint8_t
@@ -49,7 +74,7 @@ readpins_debounced(void) {
   o = btnstate;
   SREG = sreg;
 
-  return o;
+  return o ^ 0xFF; /* 1 is true dammit */
 }
 
 ISR(TIMER0_OVF_vect) {
