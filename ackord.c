@@ -22,22 +22,20 @@ main(void) {
       key = pgm_read_byte_near(keymap + newkeystate);
 
       switch (key) {
-
+      case 0: break;
       case KEY_CTRL  + MODIFIER_OFFSET: /* fallthrough */;
       case KEY_ALT   + MODIFIER_OFFSET: /* fallthrough */;
       case KEY_SHIFT + MODIFIER_OFFSET: /* fallthrough */;
       case KEY_GUI   + MODIFIER_OFFSET:
         keyboard_modifier_keys |= (key - MODIFIER_OFFSET);
-	keyboard_keys[0] = KEY_K;
-	usb_keyboard_send();
-	keyboard_keys[0] = 0;
         break;
 
-      default: 
+      default:
 	keyboard_keys[0] = key;
 	usb_keyboard_send();
 	keyboard_modifier_keys = keyboard_keys[0] = 0;
-	break; 
+	usb_keyboard_send();
+        break; 
       }
      }
     oldkeystate = newkeystate;
